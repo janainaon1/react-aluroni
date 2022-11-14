@@ -23,14 +23,21 @@ export default function Itens(props: Props) {
     return true;
   }
 
+  function ordenarPropriedadeCrescente(
+      lista: typeof cardapio, 
+      propriedade: keyof Pick<typeof cardapio[0], 'size' | 'serving' | 'price'> 
+    ) {
+    return lista.sort((item1, item2) => item1[propriedade] > item2[propriedade] ? 1 : -1)
+  }
+
   function ordenar(novaLista: typeof cardapio) {
     switch(ordenador) {
       case 'porcao':
-        return novaLista.sort((item1, item2) => item1.size > item2.size ? 1 : -1)
+        return ordenarPropriedadeCrescente(novaLista, 'size');
       case 'qtd_pessoas':
-        return novaLista.sort((item1, item2) => item1.serving > item2.serving ? 1 : -1)
+        return ordenarPropriedadeCrescente(novaLista, 'serving');
       case 'preco':
-        return novaLista.sort((item1, item2) => item1.price > item2.price ? 1 : -1)
+        return ordenarPropriedadeCrescente(novaLista, 'price');
       default:
         return novaLista
     }
